@@ -1,22 +1,29 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import assets from "../assets/assets";
+import { AuthContext } from "../../context/AuthContext";
 
 const LoginPage = () => {
-  const [currentState, setCurrentState] = useState("Sign up");
+  const [currState, setCurrState] = useState("Sign up");
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [bio, setBio] = useState("");
   const [isDataSubmitted, setIsDataSubmitted] = useState(false);
 
-  const onSubmitHandler = (e) => {
-    e.preventDefault();
+  const {login} = useContext(AuthContext);
+  
 
-    if (currentState === "Sign up" && !isDataSubmitted) {
+  const onSubmitHandler = (event) => {
+    event.preventDefault();
+
+    if (currState === "Sign up" && !isDataSubmitted) {
       setIsDataSubmitted(true);
       return;
 
     }
+
+    console.log("Submit button clicked"); // <-- Log to console
+    login(currState=== "Sign up" ? "signup" : "login", {fullName, email, password, bio})
 
   }
 
@@ -27,7 +34,7 @@ const LoginPage = () => {
       {/*----------Right--------------  */}
       <form onSubmit={onSubmitHandler} className="border-2 bg-white/8 text-white border-gray-500 p-6 flex flex-col gap-6 rounded-lg shadow-lg">
         <h2 className="font-medium text-2xl flex justify-between items-center">
-          {currentState}
+          {currState}
           {isDataSubmitted && 
             <img onClick={()=> setIsDataSubmitted(false)}
               src={assets.arrow_icon}
@@ -36,7 +43,7 @@ const LoginPage = () => {
             />
           }
         </h2>
-        {currentState === "Sign up" && !isDataSubmitted && (
+        {currState === "Sign up" && !isDataSubmitted && (
           <input
             onChange={(e) => setFullName(e.target.value)}
             value={fullName}
@@ -67,7 +74,7 @@ const LoginPage = () => {
           </>
         )}
 
-        {currentState === "Sign up" && isDataSubmitted && (
+        {currState === "Sign up" && isDataSubmitted && (
           <textarea
             onChange={(e) => setBio(e.target.value)}
             value={bio}
@@ -81,19 +88,19 @@ const LoginPage = () => {
           type="submit"
           className=" p-3 bg-gradient-to-r from-purple-400 to-violet-600 text-white rounded-md cursor-pointer"
         >
-          {currentState === "Sign up" ? "create account" : "Login Now"}
+          {currState === "Sign up" ? "create account" : "Login Now"}
         </button>
         <div className="flex items-center gap-2 text-sm text-gray-500">
           <input type="checkbox" />
           <p>Agree to terms of use & privacy policy.</p>
         </div>
         <div className="flex flex-col gap-2">
-          {currentState === "Sign up" ? (
+          {currState === "Sign up" ? (
             <p className="text-sm text-gray-600">
               Already have an account?
               <span
                 onClick={() => {
-                  setCurrentState("Login");
+                  setCurrState("Login");
                   setIsDataSubmitted(false);
                 }}
                 className="font-medium text-violet-500 cursor-pointer"
@@ -105,7 +112,7 @@ const LoginPage = () => {
             <p text-sm text-gray-600>
               Create an account
               <span
-                onClick={() => setCurrentState("Sign up")}
+                onClick={() => setCurrState("Sign up")}
                 className="font-medium text-violet-500 cursor-pointer"
               >
                 Click here
