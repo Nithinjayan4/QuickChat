@@ -22,7 +22,7 @@ const LoginPage = () => {
 
     }
 
-    console.log("Submit button clicked"); // <-- Log to console
+   
     login(currState=== "Sign up" ? "signup" : "login", {fullName, email, password, bio})
 
   }

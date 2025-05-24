@@ -10,7 +10,7 @@ const backendUrl = import.meta.env.VITE_BACKEND_URL;
 axios.defaults.baseURL = backendUrl;
 
 export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(localStorage.getItem("token") || null);
+  const [token, setToken] = useState(localStorage.getItem("token"));
   const [authUser, setAuthUser] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [socket, setSocket] = useState(null);
@@ -36,8 +36,8 @@ export const AuthProvider = ({ children }) => {
     try{
          const {data}=await axios.post(`/api/auth/${state}`, credentials);
             if(data.success){
-                setAuthUser(data.user);
-                connectSocket(data.user);
+                setAuthUser(data.userData);
+                connectSocket(data.userData);
                 axios.defaults.headers.common["token"] = data.token;
                setToken(data.token);
                 localStorage.setItem("token", data.token);

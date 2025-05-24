@@ -9,6 +9,7 @@ const ProfilePage = () => {
   const navigate = useNavigate();
   const [name, setName] = useState(authUser.fullName);
   const [bio, setBio] = useState(authUser.bio);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!selectedImg) {
@@ -16,12 +17,12 @@ const ProfilePage = () => {
       navigate("/");
       return;
     }
-    const render = new FileReader();
-    render.readAsDataURL(selectedImg);
-    render.onload = async () => {
-      const base64Image = render.result;
+    const reader = new FileReader();
+    reader.readAsDataURL(selectedImg);
+    reader.onload = async () => {
+      const base64Image = reader.result;
       await updateProfile({ profilePic: base64Image, fullName: name, bio });
-      setSelectedImg(null);
+     
       navigate("/");
     };
   };
@@ -80,9 +81,7 @@ const ProfilePage = () => {
           </button>
         </form>
         <img
-          src={selectedImg
-      ? URL.createObjectURL(selectedImg)
-      : authUser?.profilePic || assets.logo_icon}
+          src={ authUser?.profilePic || assets.logo_icon}
           alt=""
           className={`max-w-44 aspect-square rounded-full max-10 max-sm:mt-10 ${selectedImg && "rounded-full"}`}
         />
