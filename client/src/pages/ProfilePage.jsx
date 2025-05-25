@@ -32,7 +32,7 @@ const ProfilePage = () => {
       <div className="w-5/6 max-w-2xl backdrop-blur-2xl text-gray-300 border-2 border-gray-600 flex items-center justify-between max-sm:flex-col-reverse rounded-lg">
         <form
           onSubmit={handleSubmit}
-          className=" flex flex-col gap-5 p-10 flex-1"
+          className="flex flex-col gap-5 p-10 flex-1"
         >
           <h3 className="text-lg">Profile Details</h3>
           <label
@@ -83,7 +83,7 @@ const ProfilePage = () => {
         <img
           src={ authUser?.profilePic || assets.logo_icon}
           alt=""
-          className={`max-w-44 aspect-square rounded-full max-10 max-sm:mt-10 ${selectedImg && "rounded-full"}`}
+          className={`max-w-44 aspect-square rounded-full mx-10 max-sm:mt-10 ${selectedImg && "rounded-full"}`}
         />
       </div>
     </div>
